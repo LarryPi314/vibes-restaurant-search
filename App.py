@@ -7,9 +7,9 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
 
-PINECONE_API_KEY = "pcsk_6o52SL_JymqrrDawbtPrw5QUMtFGAxZLX2JPbAKqMpAHQ3BKqpNiWP3HcCzYXursthHqCT" #os.getenv("PINECONE_API_KEY")
+PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")
-GEMINI_API_KEY = "AIzaSyA4B5CYMx5kIaoDordxNsl-fZenVtMWIa8"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
