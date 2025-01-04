@@ -1,16 +1,17 @@
 import streamlit as st
 from pinecone import Pinecone
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from anthropic import Anthropic
+import anthropic
 import os
+import google.generativeai as genai
 from dotenv import load_dotenv
 load_dotenv()
 
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+PINECONE_API_KEY = "pcsk_6o52SL_JymqrrDawbtPrw5QUMtFGAxZLX2JPbAKqMpAHQ3BKqpNiWP3HcCzYXursthHqCT" #os.getenv("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-
-anthropic_client = Anthropic()
+GEMINI_API_KEY = "AIzaSyA4B5CYMx5kIaoDordxNsl-fZenVtMWIa8"
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 st.title("Vibes-Based Restaurant Search")
 st.write("Finding underground taco 🌮 spots should be easy. Enter your vibe and let's find the perfect spot for you.")
@@ -31,11 +32,11 @@ index = pc.Index(PINECONE_INDEX_NAME)
 def embed_query(user_query):
     embeddings = pc.inference.embed(
         model="multilingual-e5-large",
-        inputs=user_query,
-        parameters={"input_type": "query", "truncate": "END"}
+        inputs=[user_query],
+        parameters={"input_type": "query"}
     )
 
-    print(embeddings)
+    return embeddings
 
 def add_context_retriever_chain(user_query):
     prompt = ChatPromptTemplate.from_messages([
@@ -48,47 +49,39 @@ def add_context_retriever_chain(user_query):
 # Search vectore store
 def vectorstore_retrieval(embedded_query):
     results = index.query(
-        queries=embedded_query,
+        namespace="example-namespace",
+        vector=embedded_query[0].values,
         top_k=5,
         # include_values=True,
         include_metadata=True
     )
 
     restaurants = []
-    for restaurant in results["restaurants"]:
-        restaurants.append(restaurant.metadata)
-    
-    # get restaurant names and their metadata in some format TODO
-    
+    for restaurant in results['matches']:
+        restaurants.append(restaurant['metadata'])
+        
     return restaurants
 
 def format_restaurants_output(relevant_restaurants):
     restaurant_recs = []
-    prompt = f"""
-          You are a creative writer. Your task is to write a two-sentence exciting and 
+    
+    for restaurant in relevant_restaurants:
+        restaurant_name = restaurant['name']
+        restaurant_info = restaurant['description'] + ' '.join(restaurant['reviews'])
+        prompt = f"""
+            You are a creative writer. Your task is to write a one sentence exciting and 
           appealing description of a restaurant based on the given information.
           
           Restaurant Name: {restaurant_name}
           Restaurant Info: {restaurant_info}
           
-          Description:"""
-    
-    for restaurant in relevant_restaurants:
-        restaurant_name = restaurant["name"]
-        restaurant_info = restaurant["info"]
+          Description:""" # TODO move this prompt outside of loop
 
-        response = Anthropic.messages.create(
-            model="claude-1.3",  # Use your preferred Claude version
-            max_tokens_to_sample=150,
-            messages=[
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-        ) # TODO may need to edit depending on how anthropic outputs
+        response = model.generate_content(prompt) # TODO may need to edit depending on how anthropic outputs
         
         restaurant_recs.append({
             "name": restaurant_name,
-            "description": response.completion
+            "restaurant_intro": response.text
         })
     
     return restaurant_recs
@@ -99,29 +92,28 @@ def write_intro(user_query):
           You are a creative writer. Your task is to write a three-sentence exciting description
           of what the user asked for, describing the theme of restaurants that are returned."""
 
-    response = Anthropic.messages.create(
-        model="claude-1.3",  # Use your preferred Claude version
-        max_tokens_to_sample=150,
-        messages=[
-                {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
-    ) # TODO may need to edit depending on how anthropic outputs
-
-    return response.completion
+    response = model.generate_content(prompt) # TODO may need to edit depending on how anthropic outputs
+    text = response.text
+    return text
 
 
 # Pipeline connected
 def get_relevant_restaurants(user_query):
+    st.write(user_query)
     embedded_query = embed_query(user_query)
     relevant_restaurants = vectorstore_retrieval(embedded_query)
     formatted_restaurants = format_restaurants_output(relevant_restaurants)
     st.write(write_intro(user_query))
-    st.write(formatted_restaurants)
+    
+    # Display restaurants
+    for restaurant in formatted_restaurants:
+        st.subheader(restaurant["name"])
+        st.write(restaurant["restaurant_intro"])
+        st.markdown("---")
     return relevant_restaurants
 
-
-st.write(get_relevant_restaurants(st.session_state.user_query))
+if st.session_state.user_query and st.button("Search"):
+  get_relevant_restaurants(st.session_state.user_query)
 
     
 
