@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SearchBar } from './search-bar';
 import { RestaurantCard } from '../restaurants/restaurant-card';
 import { SearchResult } from '@/lib/types';
@@ -9,8 +9,9 @@ import { toast } from 'sonner';
 interface SearchSectionProps {
   userId: string;
 }
-
+// TODO why do we need userId?
 export function SearchSection({ userId }: SearchSectionProps) {
+  const query = sessionStorage.getItem('query');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
@@ -36,6 +37,11 @@ export function SearchSection({ userId }: SearchSectionProps) {
     }
   };
 
+  useEffect(() => {
+    if (query) {
+      handleSearch(query);
+    }
+  }, [query]);
   const handleFavorite = async (restaurantId: string) => {
     const response = await fetch('/api/favorites', {
       method: 'POST',
@@ -61,9 +67,7 @@ export function SearchSection({ userId }: SearchSectionProps) {
   }
 
   return (
-    <div className="space-y-8">
-      <SearchBar onSearch={handleSearch} isLoading={isLoading} />
-      
+    <div className="space-y-8">      
       {results.length > 0 && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {results.map(({ restaurant, score }) => (

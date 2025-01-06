@@ -1,14 +1,12 @@
-// This will be our user's favorite page. 
-// It is protected, meaning only logged in users can see it. 
 
 import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 import { SearchBar } from '@/components/search/search-bar'
 import { SearchSection } from '@/components/search/search-section'
-import NewSearchBar from '@/components/search/new-search-bar'
+import { SearchProvider } from '@/components/search/SearchContext'
 
-export default async function PrivatePage() {
+export default async function SearchResultsPage() {
   const supabase = await createClient()
   const { data: { session } } = await supabase.auth.getSession();
   
@@ -23,8 +21,10 @@ export default async function PrivatePage() {
 
   return (
     <>
+      <SearchProvider>
       <p>Hello {data.user.email}, here are some of your favorite restaurants.</p>
-      <NewSearchBar />
+      <SearchSection userId={session.user.id} />
+      </SearchProvider>
     </>
   ) 
 }
