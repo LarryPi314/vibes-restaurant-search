@@ -12,6 +12,7 @@ interface RestaurantCardProps {
   score?: number;
   isFavorited?: boolean;
   onFavorite?: (id: string) => Promise<void>;
+  onClick?: (id: string) => Promise<void>;
 }
 
 export function RestaurantCard({ 
@@ -36,7 +37,7 @@ export function RestaurantCard({
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full cursor-pointer">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <span>{restaurant.name}</span>

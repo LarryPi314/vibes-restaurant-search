@@ -14,9 +14,7 @@ export default async function Home() {
       <h1 className="text-4xl font-bold text-center mb-8">
         Find Your Perfect Restaurant Vibe
       </h1>
-      {session ? (
-        <SearchSection userId={session.user.id} />
-      ) : (
+      (
         <div className="max-w-sm mx-auto">
           <p className="text-center mb-4 text-muted-foreground">
             Sign in to start discovering restaurants that match your vibe
@@ -28,7 +26,7 @@ export default async function Home() {
             <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
           </Link>
         </div>
-      )}
+      )
     </main>
   );
 }

@@ -29,12 +29,6 @@ export function SearchSection({ userId }: SearchSectionProps) {
       const data = await response.json();
       setResults(data.results);
       
-      // Fetch favorites after search
-      const favResponse = await fetch('/api/favorites');
-      if (favResponse.ok) {
-        const { favorites } = await favResponse.json();
-        setFavorites(new Set(favorites.map(f => f.restaurant_id)));
-      }
     } catch (error) {
       toast.error('Failed to search restaurants');
     } finally {
@@ -62,6 +56,10 @@ export function SearchSection({ userId }: SearchSectionProps) {
     });
   };
 
+  const handleRestaurantClick = async (id: string) => {
+    console.log("todo")
+  }
+
   return (
     <div className="space-y-8">
       <SearchBar onSearch={handleSearch} isLoading={isLoading} />
@@ -75,6 +73,7 @@ export function SearchSection({ userId }: SearchSectionProps) {
               score={score}
               isFavorited={favorites.has(restaurant.id)}
               onFavorite={handleFavorite}
+              onClick={handleRestaurantClick}
             />
           ))}
         </div>
