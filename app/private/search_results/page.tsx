@@ -2,9 +2,7 @@
 import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
-import { SearchBar } from '@/components/search/search-bar'
 import { SearchSection } from '@/components/search/search-section'
-import { SearchProvider } from '@/components/search/SearchContext'
 
 export default async function SearchResultsPage() {
   const supabase = await createClient()
@@ -21,10 +19,8 @@ export default async function SearchResultsPage() {
 
   return (
     <>
-      <SearchProvider>
       <p>Hello {data.user.email}, here are some of your favorite restaurants.</p>
       <SearchSection userId={session.user.id} />
-      </SearchProvider>
     </>
   ) 
 }

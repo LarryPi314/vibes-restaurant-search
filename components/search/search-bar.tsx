@@ -1,37 +1,30 @@
 "use client";
-
 import { useState } from 'react';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-  isLoading?: boolean;
-}
+import { redirect } from 'next/navigation';
 
-export function SearchBar({ onSearch, isLoading }: SearchBarProps) {
-  const [query, setQuery] = useState('');
+export default function SearchBar() {
+    const [query, setQuery] = useState('');
+    const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      onSearch(query);
-    }
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    sessionStorage.setItem('query', query)
+    router.push('/private/search_results')
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 w-full max-w-2xl">
-      <Input
-        placeholder="Describe your perfect restaurant vibe..."
+    <form onSubmit={handleSearch}>
+      <input
+        type="text"
+        name="query"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="flex-1"
+        onChange={(e) => setQuery(e.target.value)}  // Update the state when the input changes
+        placeholder="Juicy birria tacos with sprite..."
+        required
       />
-      <Button type="submit" disabled={isLoading}>
-        <Search className="h-4 w-4 mr-2" />
-        {isLoading ? 'Searching...' : 'Search'}
-      </Button>
+      <button type="submit">Search</button>
     </form>
   );
-}
+};

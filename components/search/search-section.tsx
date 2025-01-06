@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { SearchBar } from './search-bar';
 import { RestaurantCard } from '../restaurants/restaurant-card';
 import { SearchResult } from '@/lib/types';
 import { toast } from 'sonner';
