@@ -30,7 +30,7 @@ export function RestaurantCard({
     if (!onFavorite) return;
     setIsLoading(true);
     try {
-      await onFavorite(restaurant.id);
+      await onFavorite(restaurant.restaurant_id);
       toast.success(isFavorited ? 'Removed from favorites' : 'Added to favorites');
     } catch (error) {
       toast.error('Failed to update favorites');
@@ -53,7 +53,6 @@ export function RestaurantCard({
       </CardHeader>
       <CardContent>
         <p className="text-sm text-muted-foreground mb-2">{restaurant.description}</p>
-        <p className="text-sm italic">&quot;{restaurant.vibeDescription}&quot;</p>
         {score !== undefined && (
           <div className="mt-2 text-sm text-muted-foreground">
             Match score: {Math.round(score * 100)}%
