@@ -1,8 +1,4 @@
-// This will be our user's favorite page. 
-// It is protected, meaning only logged in users can see it. 
-
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@/utils/supabase/server'
 import SearchBar from '@/components/search/search-bar'
 import { SearchSection } from '@/components/search/search-section'
@@ -12,8 +8,10 @@ import Favorites from '@/components/dashboard/restaurant-favorites'
 
 export default async function Dashboard() {
   const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession();
-  
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
   if (!session) {
     redirect('/login')
   }
@@ -24,12 +22,23 @@ export default async function Dashboard() {
   }
 
   return (
-    <>
-      <p>Hello {data.user.email}, here are some of your favorite restaurants.</p>
-      
-      <Signout />
-      <Favorites/>
-      <SearchBar />
-    </>
-  ) 
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-8">
+      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
+        <h1 className="text-2xl font-bold mb-4">Welcome to Your Dashboard</h1>
+        <p className="text-lg mb-6 text-gray-600">
+          Hello <span className="font-semibold text-gray-900">{data.user.email}</span>, here are some of your favorite restaurants:
+        </p>
+        
+        <Favorites />
+        
+        <div className="mt-8">
+          <SearchBar />
+        </div>
+        
+        <div className="mt-6">
+          <Signout />
+        </div>
+      </div>
+    </div>
+  )
 }
