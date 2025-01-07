@@ -22,8 +22,8 @@ export default async function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-8">
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gray-50 p-8">
+      <div className="w-full bg-white shadow-md rounded-lg p-6">
         <h1 className="text-2xl font-bold mb-4">Welcome to Your Dashboard</h1>
         <p className="text-lg mb-6 text-gray-600">
           Hello <span className="font-semibold text-gray-900">{data.user.email}</span>, here are some of your favorite restaurants:

@@ -6,6 +6,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-white">
         <div className="max-w-sm mx-auto">
+        <div className="text-center text-6xl mb-4">🍱 🍙 🥮</div>
           <p className="text-center mb-4 text-muted-foreground">
             Finding underground taco spots 🌮 should be easy. Enter your cravings and let's find you a spot!
           </p>

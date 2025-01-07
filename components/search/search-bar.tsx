@@ -19,7 +19,7 @@ export default function SearchBar() {
         name="query"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Juicy birria tacos with sprite..."
+        placeholder="Enter your cravings!"
         required
         style={styles.input}
       />
