@@ -3,6 +3,8 @@ import { login, signup } from './actions'
 export default function LoginPage() {
   return (
     <form>
+      <label htmlFor="name">Name:</label>
+      <input id="name" name="name" type="text" required />
       <label htmlFor="email">Email:</label>
       <input id="email" name="email" type="email" required />
       <label htmlFor="password">Password:</label>

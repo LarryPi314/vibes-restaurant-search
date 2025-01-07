@@ -1,14 +1,8 @@
 import { SearchSection } from '@/components/search/search-section';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { AuthForm } from '@/components/auth/auth-form';
 import Link from "next/link";
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
 export default async function Home() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data: { session } } = await supabase.auth.getSession();
-
   return (
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold text-center mb-8">

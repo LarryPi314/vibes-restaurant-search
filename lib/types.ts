@@ -1,13 +1,10 @@
 export interface Restaurant {
-  id: string;
+  restaurant_id: string;
   name: string;
   description: string;
-  cuisine: string;
-  priceRange: '£' | '££' | '£££' | '££££';
-  location: string;
-  vibeDescription: string;
+  address: string;
   rating: number;
-  embedding?: number[];
+  reviews: string;
 }
 
 export interface SearchResult {
