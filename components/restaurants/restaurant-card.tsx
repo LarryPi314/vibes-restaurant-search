@@ -10,20 +10,23 @@ import { toast } from 'sonner';
 interface RestaurantCardProps {
   restaurant: Restaurant;
   score?: number;
+  vibeDescription?: string;
   isFavorited?: boolean;
   onFavorite?: (id: string) => Promise<void>;
-  onClick?: (id: string) => Promise<void>;
 }
 
 export function RestaurantCard({ 
   restaurant, 
   score, 
+  vibeDescription,
   isFavorited = false,
-  onFavorite 
+  onFavorite,
 }: RestaurantCardProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleFavorite = async () => {
+  const handleFavorite = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     if (!onFavorite) return;
     setIsLoading(true);
     try {
@@ -35,6 +38,8 @@ export function RestaurantCard({
       setIsLoading(false);
     }
   };
+  console.log("in restaurant card")
+  console.log(vibeDescription)
 
   return (
     <Card className="w-full cursor-pointer">

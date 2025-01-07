@@ -5,9 +5,10 @@ export interface Restaurant {
   cuisine: string;
   priceRange: '£' | '££' | '£££' | '££££';
   location: string;
-  vibeDescription: string;
+  vibeDescription?: string;
   rating: number;
   embedding?: number[];
+  reviews?: string;
 }
 
 export interface SearchResult {

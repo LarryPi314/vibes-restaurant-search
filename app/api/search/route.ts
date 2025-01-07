@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
     const searchResults: SearchResult[] = results.matches.map((match) => ({
       restaurant: match.metadata as any,
-      score: match.score as number // TODO add score function info: match.score,
+      score: match.score as number
     }));
 
     return NextResponse.json({ results: searchResults });
