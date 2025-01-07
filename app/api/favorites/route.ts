@@ -1,10 +1,11 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = await createClient();
+
     const { restaurantId } = await req.json();
     
     const { data: { user } } = await supabase.auth.getUser();
@@ -36,17 +37,19 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
-    
+    const supabase = await createClient();
+
     const { data: { user } } = await supabase.auth.getUser();
     
+    console.log("SHREK", user === null);
+
     if (!user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
-
+    
     const { data: favorites, error } = await supabase
       .from('favorites')
       .select('restaurant_id')
@@ -54,7 +57,17 @@ export async function GET(req: Request) {
 
     if (error) throw error;
 
-    return NextResponse.json({ favorites });
+    const { data: restaurants, error: restaurant_error } = await supabase
+      .from('restaurants')
+      .select('*')
+      .in('restaurant_id', favorites.map(favorite => favorite.restaurant_id));
+
+    if(restaurant_error) throw restaurant_error;
+    
+    console.log(favorites)
+    console.log("Hello Shrek")
+
+    return NextResponse.json({ restaurants });
   } catch (error) {
     console.error('Get favorites error:', error);
     return NextResponse.json(

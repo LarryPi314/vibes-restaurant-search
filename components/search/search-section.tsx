@@ -92,21 +92,21 @@ export function SearchSection({ userId }: SearchSectionProps) {
     }
   };
 
-  useEffect(() => {
-    const fetchVibeDescriptions = async () => {
-      const descriptions: { [id: string]: string | undefined } = {};
-      for (const { restaurant } of results) {
-        const description = await getMatchExplanation(restaurant);
-        descriptions[restaurant.id] = description;
-      }
-      console.log("setting descriptions", descriptions)
-      setVibeDescriptions(descriptions);
-    };
+  // useEffect(() => {
+  //   const fetchVibeDescriptions = async () => {
+  //     const descriptions: { [id: string]: string | undefined } = {};
+  //     for (const { restaurant } of results) {
+  //       const description = await getMatchExplanation(restaurant);
+  //       descriptions[restaurant.id] = description;
+  //     }
+  //     console.log("setting descriptions", descriptions)
+  //     setVibeDescriptions(descriptions);
+  //   };
 
-    if (results.length > 0) {
-      fetchVibeDescriptions();
-    }
-  }, [results]);
+  //   if (results.length > 0) {
+  //     fetchVibeDescriptions();
+  //   }
+  // }, [results]);
 
   return (
     <div className="space-y-8">
@@ -115,11 +115,11 @@ export function SearchSection({ userId }: SearchSectionProps) {
           {results.map(({ restaurant, score }) => (
             <div className="flex items-stretch">
               <RestaurantCard
-                key={restaurant.id}
+                key={restaurant.restaurant_id}
                 restaurant={restaurant}
                 score={score}
-                vibeDescription={vibeDescriptions[restaurant.id]}
-                isFavorited={favorites.has(restaurant.id)}
+                vibeDescription={vibeDescriptions[restaurant.restaurant_id]}
+                isFavorited={favorites.has(restaurant.restaurant_id)}
                 onFavorite={handleFavorite}
               />
             </div>
