@@ -8,6 +8,6 @@ const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY,
 });
 
-export const restaurantIndex = pinecone.index('defaultindex');
+export const restaurantIndex = pinecone.index('syncedindex');
 
 export default pinecone;

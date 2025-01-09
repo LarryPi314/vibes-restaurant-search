@@ -3,9 +3,11 @@ export interface Restaurant {
   name: string;
   description: string;
   address?: string;
+  city?: string;
   rating: number;
   embedding?: number[];
   reviews?: string;
+  photo?: string;
 }
 
 export interface SearchResult {

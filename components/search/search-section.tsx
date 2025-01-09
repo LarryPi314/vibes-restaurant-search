@@ -44,11 +44,11 @@ export function SearchSection({ userId }: SearchSectionProps) {
     }
   }, [query]);
 
-  const handleFavorite = async (restaurantId: string) => {
+  const handleFavorite = async (restaurantId: string, isFavorited: boolean) => {
     const response = await fetch('/api/favorites', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ restaurantId }),
+      body: JSON.stringify({ restaurantId, isFavorited}),
     });
 
     if (!response.ok) throw new Error('Failed to update favorite');
@@ -107,7 +107,8 @@ export function SearchSection({ userId }: SearchSectionProps) {
   //     fetchVibeDescriptions();
   //   }
   // }, [results]);
-
+  console.log("results", results)
+  console.log(favorites)
   return (
     <div className="space-y-8">
       {results.length > 0 && (

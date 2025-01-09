@@ -6,8 +6,9 @@ export async function POST(req: Request) {
   try {
     const supabase = await createClient();
 
-    const { restaurantId } = await req.json();
+    const { restaurantId, isFavorited } = await req.json();
     
+    console.log("SHREK POST favorites", restaurantId);
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
@@ -17,13 +18,23 @@ export async function POST(req: Request) {
       );
     }
 
-    const { error } = await supabase
-      .from('favorites')
-      .insert([
-        { user_id: user.id, restaurant_id: restaurantId }
-      ]);
+    if (!isFavorited){
+      const { error } = await supabase
+        .from('favorites')
+        .insert([
+          { user_id: user.id, restaurant_id: restaurantId }
+        ]);
 
-    if (error) throw error;
+      if (error) throw error;
+    } else {
+      const { error } = await supabase
+        .from('favorites')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('restaurant_id', restaurantId);
+
+      if (error) throw error
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -41,7 +52,7 @@ export async function GET(req: Request) {
 
     const { data: { user } } = await supabase.auth.getUser();
     
-    console.log("SHREK", user === null);
+    console.log("SHREK GET favorites", user === null);
 
     if (!user) {
       return NextResponse.json(

@@ -12,7 +12,7 @@ interface RestaurantCardProps {
   score?: number;
   vibeDescription?: string;
   isFavorited?: boolean;
-  onFavorite?: (id: string) => Promise<void>;
+  onFavorite?: (id: string, isFavorited: boolean) => Promise<void>;
 }
 
 export function RestaurantCard({ 
@@ -26,11 +26,12 @@ export function RestaurantCard({
 
   const handleFavorite = async (e: React.MouseEvent) => {
     e.stopPropagation();
-
+    
     if (!onFavorite) return;
     setIsLoading(true);
     try {
-      await onFavorite(restaurant.restaurant_id);
+      console.log(restaurant.restaurant_id);
+      await onFavorite(restaurant.restaurant_id, isFavorited);
       toast.success(isFavorited ? 'Removed from favorites' : 'Added to favorites');
     } catch (error) {
       toast.error('Failed to update favorites');
@@ -46,13 +47,20 @@ export function RestaurantCard({
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <span>{restaurant.name}</span>
-          <span className="text-sm font-normal text-muted-foreground">
-            {restaurant.priceRange} • {restaurant.cuisine}
-          </span>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-sm text-muted-foreground mb-2">{restaurant.description}</p>
+        {restaurant.photo && (
+          <div className="mb-4">
+            <img
+              src={restaurant.photo}
+              alt={`${restaurant.name} photo`}
+              className="w-full h-64 object-cover rounded-lg"
+            />
+          </div>
+        )}
+
         {score !== undefined && (
           <div className="mt-2 text-sm text-muted-foreground">
             Match score: {Math.round(score * 100)}%
@@ -60,7 +68,7 @@ export function RestaurantCard({
         )}
       </CardContent>
       <CardFooter className="flex justify-between">
-        <span className="text-sm text-muted-foreground">{restaurant.location}</span>
+        <span className="text-sm text-muted-foreground">{restaurant.city}</span>
         {onFavorite && (
           <Button
             variant="ghost"

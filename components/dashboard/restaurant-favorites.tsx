@@ -31,6 +31,21 @@ export default function Favorites() {
             setLoading(false)
         }
     }
+    
+    const handleFavorite = async (restaurantId: string, isFavorited: boolean) => {
+        const response = await fetch('/api/favorites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ restaurantId, isFavorited}),
+        });
+    
+        if (!response.ok) throw new Error('Failed to update favorite');
+        
+        setFavorites(prev => {
+            const next = [...prev]
+            return next.filter(restaurant => restaurant.restaurant_id !== restaurantId);
+        })
+    };
 
     // Run the fetch operation when the component mounts
     useEffect(() => {
@@ -48,7 +63,12 @@ export default function Favorites() {
             <ul className="mt-4">
                 {favorites.map((restaurant) => (
                     <li key={restaurant.restaurant_id} className="mb-4">
-                        <RestaurantCard restaurant={restaurant} />
+                        <RestaurantCard 
+                        key={restaurant.restaurant_id}
+                        restaurant={restaurant} 
+                        isFavorited={true}
+                        onFavorite={handleFavorite}
+                        />
                     </li>
                 ))}
             </ul>
