@@ -2,10 +2,10 @@
 
 Vibe n Dine is a modern restaurant recommendation system that allows users to search for restaurants based on specific vibes or criteria using natural language. Designed as an exploration of **Next.js** and **novel RAG AI technologies**, this project integrates cutting-edge technologies to deliver an intuitive and powerful experience for users.
 
-![Homepage](./public/images/homepage.png "Vibe n Dine Homepage")
-![Dashboard-1](./public/images/dashboard-1.png "Vibe n Dine Dashboard")
-![Dashboard-2](./public/images/dashboard[2.png "Vibe n Dine Dashboard")
-![Search](./public/images/search.png "Vibe n Dine Search page")
+![Homepage](./public/homepage.png "Vibe n Dine Homepage")
+![Dashboard-1](./public/dashboard-1.png "Vibe n Dine Dashboard")
+![Dashboard-2](./public/dashboard[2.png "Vibe n Dine Dashboard")
+![Search](./public/search.png "Vibe n Dine Search page")
 ## Key Features
 
 - **Natural Language Search**: Utilize advanced vector search to find restaurants that match a user’s desired vibe.
