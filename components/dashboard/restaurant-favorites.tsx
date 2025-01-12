@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { RestaurantCard } from '../restaurants/restaurant-card'
 import { Restaurant } from '@/lib/types'
+import { Toaster } from 'sonner';
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState<Restaurant[]>([])
@@ -61,12 +62,14 @@ export default function Favorites() {
       {/* Responsive grid: 1 column on small screens, 2 on small/medium, 3 on larger */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-5xl">
         {favorites.map((restaurant) => (
-          <RestaurantCard 
-            key={restaurant.restaurant_id}
-            restaurant={restaurant} 
-            isFavorited={true}
-            onFavorite={handleFavorite}
-          />
+          <>
+            <Toaster />
+            <RestaurantCard
+              key={restaurant.restaurant_id}
+              restaurant={restaurant}
+              isFavorited={true}
+              onFavorite={handleFavorite} />
+          </>
         ))}
       </div>
     </div>

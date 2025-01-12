@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { RestaurantCard } from '../restaurants/restaurant-card';
 import { SearchResult } from '@/lib/types';
 import { toast } from 'sonner';
-import RestaurantMatchDetails from '../details/restaurant-match-details';
 
 export function SearchSection() {
   const query = sessionStorage.getItem('query');

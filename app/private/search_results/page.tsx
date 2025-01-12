@@ -4,7 +4,7 @@ import { SearchSection } from '@/components/search/search-section';
 import SearchBar from '@/components/search/search-bar';
 import QueryIntro from '@/components/details/query-intro';
 import Link from 'next/link';
-import Header from '@/components/header/header';
+import { Toaster } from 'sonner';
 
 export default async function SearchResultsPage() {
   const supabase = await createClient();
@@ -43,7 +43,10 @@ export default async function SearchResultsPage() {
           <div>
             <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mb-6">Matches</h2>
             <div className="bg-white shadow-md rounded-lg p-4 max-h-[70vh] overflow-y-auto space-y-4">
-              <SearchSection />
+              <>
+                <Toaster />
+                <SearchSection />
+              </>
             </div>
           </div>
         </div>
