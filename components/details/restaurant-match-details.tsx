@@ -5,7 +5,6 @@ interface RestaurantMatchDetailsProps {
     matchDetails: string;
   }
   export default function RestaurantMatchDetails({ restaurantName, matchDetails }: RestaurantMatchDetailsProps) {
-    console.log("match details", matchDetails);
     return (
       <p className="text-lg mt-2">
         {restaurantName}: {matchDetails}

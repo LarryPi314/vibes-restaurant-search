@@ -66,52 +66,35 @@ export function SearchSection() {
       restaurant_name: restaurant?.name,
       description: restaurant?.description,
       reviews: restaurant?.reviews,
-    } // might not be getting the metadata TODO
-    console.log(restaurantData)
+    };
     try {
       const response = await fetch('/api/details/match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ restaurantData }),
-      })
-      console.log("response", response)
+      });
 
       if (!response.ok) throw new Error('Failed to fetch details');
       
       const data = await response.json();
-      const { restaurantName, matchDetails } = data;
-      console.log("match details", matchDetails)
-      return matchDetails as string
+      const { matchDetails } = data;
+      return matchDetails as string;
     } catch (error) {
       console.error(error);
     }
   };
 
-  // useEffect(() => {
-  //   const fetchVibeDescriptions = async () => {
-  //     const descriptions: { [id: string]: string | undefined } = {};
-  //     for (const { restaurant } of results) {
-  //       const description = await getMatchExplanation(restaurant);
-  //       descriptions[restaurant.id] = description;
-  //     }
-  //     console.log("setting descriptions", descriptions)
-  //     setVibeDescriptions(descriptions);
-  //   };
-
-  //   if (results.length > 0) {
-  //     fetchVibeDescriptions();
-  //   }
-  // }, [results]);
-  // console.log("results", results)
-  // console.log(favorites)
   return (
     <div className="space-y-8">
-      {results.length > 0 && (
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+        </div>
+      ) : results.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1">
           {results.map(({ restaurant, score }) => (
-            <div className="flex items-stretch">
+            <div className="flex items-stretch" key={restaurant.restaurant_id}>
               <RestaurantCard
-                key={restaurant.restaurant_id}
                 restaurant={restaurant}
                 score={score}
                 vibeDescription={vibeDescriptions[restaurant.restaurant_id]}
@@ -121,6 +104,8 @@ export function SearchSection() {
             </div>
           ))}
         </div>
+      ) : (
+        <div className="text-center">No results found</div>
       )}
     </div>
   );

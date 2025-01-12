@@ -11,7 +11,6 @@ export default function Favorites() {
     
   // Function to fetch favorites
   const getFavorites = async () => {
-    console.log("running get favorites")
     try {
       const response = await fetch('/api/favorites', {
         method: 'GET',
@@ -23,7 +22,6 @@ export default function Favorites() {
       if (!response.ok) throw new Error('Failed to fetch favorites')
       const data = await response.json()
       setFavorites(data.restaurants)
-      console.log("DATA", data.restaurants)
     } catch (error) {
       console.error(error)
     } finally {

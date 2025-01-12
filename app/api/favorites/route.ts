@@ -8,7 +8,6 @@ export async function POST(req: Request) {
 
     const { restaurantId, isFavorited } = await req.json();
     
-    console.log("SHREK POST favorites", restaurantId);
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
@@ -52,8 +51,6 @@ export async function GET(req: Request) {
 
     const { data: { user } } = await supabase.auth.getUser();
     
-    console.log("SHREK GET favorites", user === null);
-
     if (!user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -74,9 +71,6 @@ export async function GET(req: Request) {
       .in('restaurant_id', favorites.map(favorite => favorite.restaurant_id));
 
     if(restaurant_error) throw restaurant_error;
-    
-    console.log(favorites)
-    console.log("Hello Shrek")
 
     return NextResponse.json({ restaurants });
   } catch (error) {

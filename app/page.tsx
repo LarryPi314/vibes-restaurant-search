@@ -11,7 +11,7 @@ export default async function Home() {
       </h1>
 
   
-      <div className="text-center text-3xl mb-6">🍱 🍙 🥮</div>
+      <div className="text-center text-5xl mb-6">🍱 🍙 🥮</div>
 
       {/* App description */}
       <p className="text-center mb-8 text-gray-700 max-w-xl leading-relaxed">

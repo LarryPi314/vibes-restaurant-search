@@ -9,7 +9,6 @@ export default function SearchBar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     sessionStorage.setItem("query", query);
-    console.log("search bar pressed");
     if (pathName == "/private/search_results") {
       router.refresh();
     } else {
@@ -24,7 +23,7 @@ export default function SearchBar() {
         name="query"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter your cravings!"
+        placeholder="Find your cravings!"
         required
         style={styles.input}
       />
