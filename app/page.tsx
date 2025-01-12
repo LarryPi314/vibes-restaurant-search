@@ -15,7 +15,7 @@ export default async function Home() {
 
       {/* App description */}
       <p className="text-center mb-8 text-gray-700 max-w-xl leading-relaxed">
-        Finding underrated restaurants through a vibe check has never been easier. 
+        Finding underrated hot pot spots should be easy.<br />
         Enter your cravings and let's find exactly what you're feeling for!
       </p>
       
