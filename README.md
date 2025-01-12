@@ -1,11 +1,20 @@
 # Vibe n Dine
 
+Where good vibes meets fine taste.
+
 Vibe n Dine is a modern restaurant recommendation system that allows users to search for restaurants based on specific vibes or criteria using natural language. Designed as an exploration of **Next.js** and **novel RAG AI technologies**, this project integrates cutting-edge technologies to deliver an intuitive and powerful experience for users.
 
-![Homepage](./public/homepage.png "Vibe n Dine Homepage")
-![Dashboard-1](./public/dashboard-1.png "Vibe n Dine Dashboard")
-![Dashboard-2](./public/dashboard[2.png "Vibe n Dine Dashboard")
-![Search](./public/search.png "Vibe n Dine Search page")
+
+<div align="center">
+  <img src="./public/homepage.png" alt="Vibe n Dine Homepage" width="45%" style="margin: 5px;">
+  <img src="./public/dashboard-1.png" alt="Vibe n Dine Dashboard" width="45%" style="margin: 5px;">
+</div>
+
+<div align="center">
+  <img src="./public/dashboard-2.png" alt="Vibe n Dine Dashboard" width="45%" style="margin: 5px;">
+  <img src="./public/search.png" alt="Vibe n Dine Search page" width="45%" style="margin: 5px;">
+</div>
+
 ## Key Features
 
 - **Natural Language Search**: Utilize advanced vector search to find restaurants that match a user’s desired vibe.
@@ -72,7 +81,7 @@ Vibe n Dine is a modern restaurant recommendation system that allows users to se
 
 ---
 
-## Usage Instructions
+## How to use
 
 1. **Sign Up or Log In**:
    - Create an account or log in using the secure authentication system powered by Supabase.
@@ -88,31 +97,6 @@ Vibe n Dine is a modern restaurant recommendation system that allows users to se
 
 ---
 
-## Future Improvements
-
-- **Enhanced Image Embedding**: Further integrate food and ambiance images into the recommendation system.
-- **Personalized Recommendations**: Utilize user preferences and search history to improve results.
-- **Mobile Optimization**: Create a mobile-first design for a seamless experience on smaller screens.
-
----
-
-## Contributing
-
-Contributions are welcome! Feel free to fork the repository and submit a pull request.
-
-1. Fork the repo.
-2. Create your feature branch: `git checkout -b feature-name`.
-3. Commit your changes: `git commit -m 'Add feature-name'`.
-4. Push to the branch: `git push origin feature-name`.
-5. Open a pull request.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
 
 ## Acknowledgments
 
