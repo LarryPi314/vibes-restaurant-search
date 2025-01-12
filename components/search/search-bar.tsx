@@ -1,15 +1,20 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const router = useRouter();
-
+  const pathName = usePathname();
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     sessionStorage.setItem("query", query);
-    router.push("/private/search_results");
+    console.log("search bar pressed");
+    if (pathName == "/private/search_results") {
+      router.refresh();
+    } else {
+      router.push("/private/search_results");
+    };
   };
 
   return (

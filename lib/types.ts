@@ -6,7 +6,7 @@ export interface Restaurant {
   city?: string;
   rating: number;
   embedding?: number[];
-  reviews?: string;
+  reviews: string;
   photo?: string;
 }
 

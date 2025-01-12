@@ -6,11 +6,7 @@ import { SearchResult } from '@/lib/types';
 import { toast } from 'sonner';
 import RestaurantMatchDetails from '../details/restaurant-match-details';
 
-interface SearchSectionProps {
-  userId: string;
-}
-// TODO why do we need userId?
-export function SearchSection({ userId }: SearchSectionProps) {
+export function SearchSection() {
   const query = sessionStorage.getItem('query');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,7 +60,6 @@ export function SearchSection({ userId }: SearchSectionProps) {
     });
   };
 
-
   const getMatchExplanation = async (restaurant: any) => {
     const restaurantData = {
       query,
@@ -107,8 +102,8 @@ export function SearchSection({ userId }: SearchSectionProps) {
   //     fetchVibeDescriptions();
   //   }
   // }, [results]);
-  console.log("results", results)
-  console.log(favorites)
+  // console.log("results", results)
+  // console.log(favorites)
   return (
     <div className="space-y-8">
       {results.length > 0 && (
