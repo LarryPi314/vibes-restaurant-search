@@ -1,6 +1,6 @@
 # Vibe n Dine
 
-Where good vibes meets fine taste.
+Where good vibes meet fine taste.
 
 Vibe n Dine is a modern restaurant recommendation system that allows users to search for restaurants based on specific vibes or criteria using natural language. Designed as an exploration of **Next.js** and **novel RAG AI technologies**, this project integrates cutting-edge technologies to deliver an intuitive and powerful experience for users.
 
